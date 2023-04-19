@@ -73,7 +73,7 @@ router.post("/extract-email", async (req, res) => {
     // Headless option allows us to disable visible GUI, so the browser runs in the "background"
     // for development lets keep this to true so we can see what's going on but in
     // on a server we must set this to true
-    //headless: false,
+    // headless: false,
     // This setting allows us to scrape non-https websites easier
     args: [
       "--disable-setuid-sandbox",
@@ -91,7 +91,7 @@ router.post("/extract-email", async (req, res) => {
   await page.$eval('input[name=session_key]', (el, username) => el.value = username, process.env.LINKEDIN_USERNAME );
   await page.$eval('input[name=session_password]', (el, password) => el.value = password, process.env.LINKEDIN_PASSWORD );
   await page.click("button[type=submit]");
-  await page.waitForNavigation({waitUntil: 'networkidle2'})
+  await page.waitForNavigation()
   await page.goto(link);
   const className = '.comments-comments-list__load-more-comments-button';
   await clickElementUntilNotFound(page, className);
