@@ -75,6 +75,15 @@ router.post("/extract-email", async (req, res) => {
     // on a server we must set this to true
     //headless: false,
     // This setting allows us to scrape non-https websites easier
+    args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote"
+    ],
+    executablePath: process.env.NODE_ENV==="production"
+    ? process.env.PUPPETEER_EXECUTABLE_PATH 
+    : puppeteer.executablePath(),
     ignoreHTTPSErrors: true,
   })
   let page = await browser.newPage();
