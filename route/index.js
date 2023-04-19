@@ -88,6 +88,7 @@ router.post("/extract-email", async (req, res) => {
     ignoreHTTPSErrors: true,
   })
   let page = await browser.newPage();
+  await page.setDefaultNavigationTimeout(0);
   await page.goto('https://www.linkedin.com/', {timeout: 0});
   await page.$eval('input[name=session_key]', (el, username) => el.value = username, process.env.LINKEDIN_USERNAME );
   await page.$eval('input[name=session_password]', (el, password) => el.value = password, process.env.LINKEDIN_PASSWORD );
