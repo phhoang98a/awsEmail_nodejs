@@ -88,12 +88,12 @@ router.post("/extract-email", async (req, res) => {
     ignoreHTTPSErrors: true,
   })
   let page = await browser.newPage();
-  await page.goto('https://www.linkedin.com/');
+  await page.goto('https://www.linkedin.com/', {timeout: 0});
   await page.$eval('input[name=session_key]', (el, username) => el.value = username, process.env.LINKEDIN_USERNAME );
   await page.$eval('input[name=session_password]', (el, password) => el.value = password, process.env.LINKEDIN_PASSWORD );
   await page.click("button[type=submit]");
   await page.waitForNavigation()
-  await page.goto(link);
+  await page.goto(link, {timeout: 0});
   const className = '.comments-comments-list__load-more-comments-button';
   await clickElementUntilNotFound(page, className);
   const lists = await page.$x('//a [contains(@href,"mailto")][@href]');
